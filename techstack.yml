@@ -1,0 +1,43 @@
+repo_name: hakanai/ComposeShaderDemo
+report_id: 42154c7c2e3b0455788bcdc0bd9481ff
+version: 0.1
+repo_type: Public
+timestamp: '2024-02-11T01:33:18+00:00'
+requested_by: hakanai
+provider: github
+branch: main
+detected_tools_count: 3
+tools:
+- name: Kotlin
+  description: Statically typed Programming Language targeting JVM and JavaScript
+  website_url: https://kotlinlang.org/
+  open_source: true
+  hosted_saas: true
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/3750/pCfEzr6L.png
+  detection_source_url: https://github.com/hakanai/ComposeShaderDemo
+  detection_source: Repo Metadata
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/hakanai/ComposeShaderDemo
+  detection_source: Repo Metadata
+- name: Gradle
+  description: A powerful build system for the JVM
+  website_url: https://www.gradle.org/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Java Build Tools
+  image_url: https://img.stackshare.io/service/975/gradlephant-social-black-bg.png
+  detection_source_url: https://github.com/hakanai/ComposeShaderDemo/blob/main/gradlew
+  detection_source: gradlew
+  last_updated_by: Hakanai
+  last_updated_on: 2023-10-26 09:36:05.000000000 Z

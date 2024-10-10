@@ -1,58 +1,60 @@
 import org.jetbrains.compose.compose
 
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
-    id("com.android.library")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.android.library)
 }
 
 group = "com.example"
 version = "1.0-SNAPSHOT"
 
 kotlin {
-    android()
-    jvm("desktop") {
-        jvmToolchain(11)
-    }
+    jvmToolchain(11)
+    androidTarget()
+    jvm()
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material)
-            }
+        commonMain.dependencies {
+            api(compose.runtime)
+            api(compose.foundation)
+            api(compose.material)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
-        val androidMain by getting {
-            dependencies {
-                api("androidx.appcompat:appcompat:1.5.1")
-                api("androidx.core:core-ktx:1.9.0")
-            }
+        androidMain.dependencies {
+            api(libs.appcompat)
+            api(libs.core.ktx)
         }
-        val androidTest by getting {
-            dependencies {
-                implementation("junit:junit:4.13.2")
-            }
+        androidUnitTest.dependencies {
+            implementation(libs.junit)
         }
-        val desktopMain by getting {
-            dependencies {
-                api(compose.preview)
-            }
+        androidInstrumentedTest.dependencies {
         }
-        val desktopTest by getting
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
+        }
+        jvmTest.dependencies {
+        }
     }
 }
 
 android {
-    compileSdkVersion(33)
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    @Suppress("UnstableApiUsage")
+    buildToolsVersion = "34.0.0"
+    compileSdk = 34
+    @Suppress("UnstableApiUsage")
+    sourceSets {
+        // Quirk - for some reason this is unrecognised unless I use "main" - which is not its name
+        named("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        }
+    }
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(33)
+        minSdk = 24
+        //noinspection EditedTargetSdkVersion
+        targetSdk = 34
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

@@ -1,27 +1,41 @@
 plugins {
-    id("org.jetbrains.compose")
-    id("com.android.application")
-    kotlin("android")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
 }
 
 group = "com.example"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    jcenter()
-}
-
-dependencies {
-    implementation(project(":common"))
-    implementation("androidx.activity:activity-compose:1.5.0")
+kotlin {
+    androidTarget()
+    sourceSets {
+        androidMain {
+            dependencies {
+                implementation(project(":common"))
+                implementation(libs.activity.compose)
+            }
+        }
+    }
 }
 
 android {
-    compileSdkVersion(33)
+    @Suppress("UnstableApiUsage")
+    buildToolsVersion = "34.0.0"
+    compileSdk = 34
+    @Suppress("UnstableApiUsage")
+    sourceSets {
+        // Quirk - for some reason this is unrecognised unless I use "main" - which is not its name
+        named("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        }
+    }
     defaultConfig {
         applicationId = "com.example.android"
-        minSdkVersion(24)
-        targetSdkVersion(33)
+        minSdk = 24
+        //noinspection EditedTargetSdkVersion
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0-SNAPSHOT"
     }
@@ -31,6 +45,7 @@ android {
     }
     buildTypes {
         getByName("release") {
+            @Suppress("UnstableApiUsage")
             isMinifyEnabled = false
         }
     }
